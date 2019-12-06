@@ -5,11 +5,19 @@
  * https://web.compass.lighthouselabs.ca/days/w02d4/activities/895
  */
 
-const {
-  fetchMyIP,
-  fetchCoordsByIP,
-  fetchISSFlyOverTimes,
-} = require('./iss');
+const { nextISSTimesForMyLocation } = require('./iss');
+
+nextISSTimesForMyLocation((err, result) => {
+  if (err) {
+    console.log("Failed:", err)
+    return;
+  }
+
+  result.forEach(time => {
+    const date = new Date(time.risetime * 1000);
+    console.log(`Next pass at ${date} for ${time.duration}`);
+  })
+});
 
 // Test fetchMyIP
 // fetchMyIP((error, ip) => {
